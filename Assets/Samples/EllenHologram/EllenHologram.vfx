@@ -1098,12 +1098,12 @@ VisualEffectResource:
       VFX_USE_COLOR_CURRENT 1\n#define VFX_USE_PARTICLEID_CURRENT 1\n#define VFX_USE_ALIVE_CURRENT
       1\n#define VFX_USE_AGE_CURRENT 1\n#define VFX_WORLD_SPACE 1\n#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXDefines.hlsl\"\n\n\r\nCBUFFER_START(parameters)\n   
       float4x4 ClipToVFX_c;\n    float3 Position_d;\n    float Size_b;\n    float3
-      uniform_f;\n    uint PADDING_0;\n    float2 Camera_pixelDimensions_c;\n   
+      uniform_a;\n    uint PADDING_0;\n    float2 Camera_pixelDimensions_c;\n   
       uint2 PADDING_1;\nCBUFFER_END\n\nstruct Attributes\n{\n    float lifetime;\n   
       uint seed;\n    float size;\n    float3 position;\n    float3 color;\n    uint
       particleId;\n    bool alive;\n    float age;\n};\n\nstruct SourceAttributes\n{\n};\n\nTexture2DArray
-      Camera_depthBuffer_c;\nSamplerState samplerCamera_depthBuffer_c;\nfloat4 Camera_depthBuffer_c_TexelSize;\nTexture2DArray
-      Camera_colorBuffer_c;\nSamplerState samplerCamera_colorBuffer_c;\nfloat4 Camera_colorBuffer_c_TexelSize;\n\n\r\n\r\n#define
+      Camera_depthBuffer_c;\nSamplerState samplerCamera_depthBuffer_c;\nfloat4 Camera_depthBuffer_c_TexelSize;\n\nTexture2DArray
+      Camera_colorBuffer_c;\nSamplerState samplerCamera_colorBuffer_c;\nfloat4 Camera_colorBuffer_c_TexelSize;\n\n\n\r\n\r\n#define
       USE_DEAD_LIST (VFX_USE_ALIVE_CURRENT && !HAS_STRIPS)\r\n\r\nRWByteAddressBuffer
       attributeBuffer;\r\nByteAddressBuffer sourceAttributeBuffer;\r\n\r\nCBUFFER_START(initParams)\r\n#if
       !VFX_USE_SPAWNER_FROM_GPU\r\n    uint nbSpawned;\t\t\t\t\t// Numbers of particle
@@ -1189,8 +1189,8 @@ VisualEffectResource:
       GetVFXSampler(Camera_colorBuffer_c, samplerCamera_colorBuffer_c), (float)1,
       (uint)1, ClipToVFX_c);\n        }\n        SetAttribute_C707D62A( /*inout */attributes.position,
       Position_d);\n        {\n            float3 tmp_bc = attributes.position /
-      uniform_f;\n            float3 tmp_bd = floor(tmp_bc);\n            float3
-      tmp_be = tmp_bd * uniform_f;\n            SetAttribute_CAC29747( /*inout */attributes.position,
+      uniform_a;\n            float3 tmp_bd = floor(tmp_bc);\n            float3
+      tmp_be = tmp_bd * uniform_a;\n            SetAttribute_CAC29747( /*inout */attributes.position,
       tmp_be);\n        }\n        \n\r\n\t\t\r\n#if VFX_USE_ALIVE_CURRENT\r\n       
       if (attributes.alive)\r\n#endif       \r\n        {\r\n#if USE_DEAD_LIST\r\n\t       
       uint deadIndex = deadListIn.DecrementCounter();\r\n            uint index =
@@ -1264,8 +1264,8 @@ VisualEffectResource:
       uint indirectIndex = indirectBuffer.IncrementCounter();\r\n\t\tindirectBuffer[indirectIndex]
       = index;\r\n#endif\r\n#endif\r\n\t}\r\n}\r\n"
   - compute: 0
-    name: '[System 1]Output Particle Quad'
-    source: "Shader \"Hidden/VFX/EllenHologram/System 1/Output Particle Quad\"\n{\r\n\tSubShader\r\n\t{\t\r\n\t\tCull
+    name: '[System 1]A Output Particle Quad'
+    source: "Shader \"Hidden/VFX/EllenHologram/System 1/(A) Output Particle Quad\"\n{\r\n\tSubShader\r\n\t{\t\r\n\t\tCull
       Off\r\n\t\t\r\n\t\tTags { \"Queue\"=\"Transparent+400\" \"IgnoreProjector\"=\"True\"
       \"RenderType\"=\"Transparent\" }\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tBlend
       SrcAlpha One , Zero One\n\t\tZTest LEqual\n\t\tZWrite Off\n\t\tCull Off\n\t\t\n\t\n\t\t\t\n\t\tHLSLINCLUDE\n\t\t\n\t\t#define
@@ -1283,15 +1283,15 @@ VisualEffectResource:
       1\n\t\t#define VFX_BLENDMODE_ADD 1\n\t\t#define USE_CAST_SHADOWS_PASS 1\n\t\t#define
       USE_EXPOSURE_WEIGHT 1\n\t\t#define VFX_PRIMITIVE_QUAD 1\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t#define
       VFX_WORLD_SPACE 1\n\t\t#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXDefines.hlsl\"\n\t\t\n\n\t\tCBUFFER_START(parameters)\n\t\t   
-      float uniform_b;\n\t\t    float uniform_c;\n\t\t    float uniform_d;\n\t\t   
-      float uniform_e;\n\t\t    float uniform_f;\n\t\t    uint3 PADDING_0;\n\t\tCBUFFER_END\n\t\t\n\t\tstruct
+      float uniform_a;\n\t\t    float uniform_b;\n\t\t    float uniform_c;\n\t\t   
+      float uniform_d;\n\t\t    float uniform_e;\n\t\t    uint3 PADDING_0;\n\t\tCBUFFER_END\n\t\t\n\t\tstruct
       Attributes\n\t\t{\n\t\t    float size;\n\t\t    float3 position;\n\t\t    float3
       color;\n\t\t    bool alive;\n\t\t    float alpha;\n\t\t    float3 axisX;\n\t\t   
       float3 axisY;\n\t\t    float3 axisZ;\n\t\t    float angleX;\n\t\t    float
       angleY;\n\t\t    float angleZ;\n\t\t    float pivotX;\n\t\t    float pivotY;\n\t\t   
       float pivotZ;\n\t\t    float scaleX;\n\t\t    float scaleY;\n\t\t    float
       scaleZ;\n\t\t};\n\t\t\n\t\tstruct SourceAttributes\n\t\t{\n\t\t};\n\t\t\n\t\tTexture2D
-      mainTexture;\n\t\tSamplerState samplermainTexture;\n\t\tfloat4 mainTexture_TexelSize;\n\t\t\n\n\t\t\n\t\t#define
+      mainTexture;\n\t\tSamplerState samplermainTexture;\n\t\tfloat4 mainTexture_TexelSize;\n\t\t\n\t\t\n\n\t\t\n\t\t#define
       VFX_NEEDS_COLOR_INTERPOLATOR (VFX_USE_COLOR_CURRENT || VFX_USE_ALPHA_CURRENT)\n\t\t#if
       HAS_STRIPS\n\t\t#define VFX_OPTIONAL_INTERPOLATION \n\t\t#else\n\t\t#define
       VFX_OPTIONAL_INTERPOLATION nointerpolation\n\t\t#endif\n\t\t\n\t\tByteAddressBuffer
@@ -1408,12 +1408,12 @@ VisualEffectResource:
       Initialize built-in needed attributes\n\t\t\t\t\t\t#if HAS_STRIPS\n\t\t\t\t\t\tInitStripAttributes(index,
       attributes, stripData);\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\t{\n\t\t\t\t   
       float tmp_bb = attributes.position[1];\n\t\t\t\t    float2 tmp_bc = float2(tmp_bb,
-      uniform_d);\n\t\t\t\t    float3 tmp_bf = GeneratePerlinNoise(tmp_bc, float3(32,
+      uniform_c);\n\t\t\t\t    float3 tmp_bf = GeneratePerlinNoise(tmp_bc, float3(32,
       0.5, 2).x, (int)3, float3(32, 0.5, 2).y, float3(32, 0.5, 2).z);\n\t\t\t\t   
       float tmp_bg = tmp_bf[0];\n\t\t\t\t    float tmp_bi = tmp_bg - (float)-1;\n\t\t\t\t   
-      float tmp_bk = tmp_bi / (float)2;\n\t\t\t\t    float tmp_bl = tmp_bk * uniform_e;\n\t\t\t\t   
-      float tmp_bm = uniform_c + tmp_bl;\n\t\t\t\t    float tmp_bn = saturate(tmp_bm);\n\t\t\t\t   
-      float tmp_bo = tmp_bn * uniform_f;\n\t\t\t\t    float tmp_bp = uniform_b +
+      float tmp_bk = tmp_bi / (float)2;\n\t\t\t\t    float tmp_bl = tmp_bk * uniform_d;\n\t\t\t\t   
+      float tmp_bm = uniform_b + tmp_bl;\n\t\t\t\t    float tmp_bn = saturate(tmp_bm);\n\t\t\t\t   
+      float tmp_bo = tmp_bn * uniform_e;\n\t\t\t\t    float tmp_bp = uniform_a +
       tmp_bo;\n\t\t\t\t    float3 tmp_bq = float3(tmp_bp, tmp_bp, tmp_bp);\n\t\t\t\t   
       SetAttribute_545F0ED( /*inout */attributes.color, tmp_bq);\n\t\t\t\t}\n\t\t\t\tOrient_4(
       /*inout */attributes.axisX,  /*inout */attributes.axisY,  /*inout */attributes.axisZ);\n\t\t\t\tSubpixelAA(attributes.position, 
@@ -1623,12 +1623,12 @@ VisualEffectResource:
       Initialize built-in needed attributes\n\t\t\t\t\t\t#if HAS_STRIPS\n\t\t\t\t\t\tInitStripAttributes(index,
       attributes, stripData);\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\t{\n\t\t\t\t   
       float tmp_bb = attributes.position[1];\n\t\t\t\t    float2 tmp_bc = float2(tmp_bb,
-      uniform_d);\n\t\t\t\t    float3 tmp_bf = GeneratePerlinNoise(tmp_bc, float3(32,
+      uniform_c);\n\t\t\t\t    float3 tmp_bf = GeneratePerlinNoise(tmp_bc, float3(32,
       0.5, 2).x, (int)3, float3(32, 0.5, 2).y, float3(32, 0.5, 2).z);\n\t\t\t\t   
       float tmp_bg = tmp_bf[0];\n\t\t\t\t    float tmp_bi = tmp_bg - (float)-1;\n\t\t\t\t   
-      float tmp_bk = tmp_bi / (float)2;\n\t\t\t\t    float tmp_bl = tmp_bk * uniform_e;\n\t\t\t\t   
-      float tmp_bm = uniform_c + tmp_bl;\n\t\t\t\t    float tmp_bn = saturate(tmp_bm);\n\t\t\t\t   
-      float tmp_bo = tmp_bn * uniform_f;\n\t\t\t\t    float tmp_bp = uniform_b +
+      float tmp_bk = tmp_bi / (float)2;\n\t\t\t\t    float tmp_bl = tmp_bk * uniform_d;\n\t\t\t\t   
+      float tmp_bm = uniform_b + tmp_bl;\n\t\t\t\t    float tmp_bn = saturate(tmp_bm);\n\t\t\t\t   
+      float tmp_bo = tmp_bn * uniform_e;\n\t\t\t\t    float tmp_bp = uniform_a +
       tmp_bo;\n\t\t\t\t    float3 tmp_bq = float3(tmp_bp, tmp_bp, tmp_bp);\n\t\t\t\t   
       SetAttribute_545F0ED( /*inout */attributes.color, tmp_bq);\n\t\t\t\t}\n\t\t\t\tOrient_4(
       /*inout */attributes.axisX,  /*inout */attributes.axisY,  /*inout */attributes.axisZ);\n\t\t\t\tSubpixelAA(attributes.position, 
@@ -1849,12 +1849,12 @@ VisualEffectResource:
       Initialize built-in needed attributes\n\t\t\t\t\t\t#if HAS_STRIPS\n\t\t\t\t\t\tInitStripAttributes(index,
       attributes, stripData);\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\t{\n\t\t\t\t   
       float tmp_bb = attributes.position[1];\n\t\t\t\t    float2 tmp_bc = float2(tmp_bb,
-      uniform_d);\n\t\t\t\t    float3 tmp_bf = GeneratePerlinNoise(tmp_bc, float3(32,
+      uniform_c);\n\t\t\t\t    float3 tmp_bf = GeneratePerlinNoise(tmp_bc, float3(32,
       0.5, 2).x, (int)3, float3(32, 0.5, 2).y, float3(32, 0.5, 2).z);\n\t\t\t\t   
       float tmp_bg = tmp_bf[0];\n\t\t\t\t    float tmp_bi = tmp_bg - (float)-1;\n\t\t\t\t   
-      float tmp_bk = tmp_bi / (float)2;\n\t\t\t\t    float tmp_bl = tmp_bk * uniform_e;\n\t\t\t\t   
-      float tmp_bm = uniform_c + tmp_bl;\n\t\t\t\t    float tmp_bn = saturate(tmp_bm);\n\t\t\t\t   
-      float tmp_bo = tmp_bn * uniform_f;\n\t\t\t\t    float tmp_bp = uniform_b +
+      float tmp_bk = tmp_bi / (float)2;\n\t\t\t\t    float tmp_bl = tmp_bk * uniform_d;\n\t\t\t\t   
+      float tmp_bm = uniform_b + tmp_bl;\n\t\t\t\t    float tmp_bn = saturate(tmp_bm);\n\t\t\t\t   
+      float tmp_bo = tmp_bn * uniform_e;\n\t\t\t\t    float tmp_bp = uniform_a +
       tmp_bo;\n\t\t\t\t    float3 tmp_bq = float3(tmp_bp, tmp_bp, tmp_bp);\n\t\t\t\t   
       SetAttribute_545F0ED( /*inout */attributes.color, tmp_bq);\n\t\t\t\t}\n\t\t\t\tOrient_4(
       /*inout */attributes.axisX,  /*inout */attributes.axisY,  /*inout */attributes.axisZ);\n\t\t\t\tSubpixelAA(attributes.position, 
@@ -1949,8 +1949,8 @@ VisualEffectResource:
       USE_ALPHA_TEST\n\t\t\t\tclip(alpha - 1e-5);\n\t\t#endif\n\t\t\n\t\t\t\treturn
       0;\n\t\t\t}\n\t\t\tENDHLSL\n\t\t}\n\t\t\n\r\n\t}\r\n}\r\n"
   - compute: 0
-    name: '[System 1]Output Particle Quad'
-    source: "Shader \"Hidden/VFX/EllenHologram/System 1/Output Particle Quad\"\n{\r\n\tSubShader\r\n\t{\t\r\n\t\tCull
+    name: '[System 1]B Output Particle Quad'
+    source: "Shader \"Hidden/VFX/EllenHologram/System 1/(B) Output Particle Quad\"\n{\r\n\tSubShader\r\n\t{\t\r\n\t\tCull
       Off\r\n\t\t\r\n\t\tTags { \"Queue\"=\"Transparent+400\" \"IgnoreProjector\"=\"True\"
       \"RenderType\"=\"Transparent\" }\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tBlend
       SrcAlpha One , Zero One\n\t\tZTest LEqual\n\t\tZWrite Off\n\t\tCull Off\n\t\t\n\t\n\t\t\t\n\t\tHLSLINCLUDE\n\t\t\n\t\t#define
@@ -1969,14 +1969,14 @@ VisualEffectResource:
       VFX_BYPASS_EXPOSURE 1\n\t\t#define VFX_PRIMITIVE_QUAD 1\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t#define
       VFX_WORLD_SPACE 1\n\t\t#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXDefines.hlsl\"\n\t\t\n\n\t\tCBUFFER_START(parameters)\n\t\t   
       float3 TargetPosition_d;\n\t\t    float Alpha_a;\n\t\t    float Size_b;\n\t\t   
-      float uniform_d;\n\t\t    uint2 PADDING_0;\n\t\tCBUFFER_END\n\t\t\n\t\tstruct
+      float uniform_a;\n\t\t    uint2 PADDING_0;\n\t\tCBUFFER_END\n\t\t\n\t\tstruct
       Attributes\n\t\t{\n\t\t    float size;\n\t\t    float3 position;\n\t\t    float3
       color;\n\t\t    uint particleId;\n\t\t    bool alive;\n\t\t    float alpha;\n\t\t   
       float3 axisX;\n\t\t    float3 axisY;\n\t\t    float3 axisZ;\n\t\t    float
       angleX;\n\t\t    float angleY;\n\t\t    float angleZ;\n\t\t    float pivotX;\n\t\t   
       float pivotY;\n\t\t    float pivotZ;\n\t\t    float scaleX;\n\t\t    float
       scaleY;\n\t\t    float scaleZ;\n\t\t};\n\t\t\n\t\tstruct SourceAttributes\n\t\t{\n\t\t};\n\t\t\n\t\tTexture2D
-      mainTexture;\n\t\tSamplerState samplermainTexture;\n\t\tfloat4 mainTexture_TexelSize;\n\t\t\n\n\t\t\n\t\t#define
+      mainTexture;\n\t\tSamplerState samplermainTexture;\n\t\tfloat4 mainTexture_TexelSize;\n\t\t\n\t\t\n\n\t\t\n\t\t#define
       VFX_NEEDS_COLOR_INTERPOLATOR (VFX_USE_COLOR_CURRENT || VFX_USE_ALPHA_CURRENT)\n\t\t#if
       HAS_STRIPS\n\t\t#define VFX_OPTIONAL_INTERPOLATION \n\t\t#else\n\t\t#define
       VFX_OPTIONAL_INTERPOLATION nointerpolation\n\t\t#endif\n\t\t\n\t\tByteAddressBuffer
@@ -2096,7 +2096,7 @@ VisualEffectResource:
       attributes, stripData);\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\tSetAttribute_CEEAF35C(
       /*inout */attributes.alpha, Alpha_a);\n\t\t\t\tSetAttribute_3278B22F( /*inout
       */attributes.size, Size_b);\n\t\t\t\t{\n\t\t\t\t    uint tmp_ba = attributes.particleId
-      / asuint(uniform_d);\n\t\t\t\t    uint tmp_bb = tmp_ba * asuint(uniform_d);\n\t\t\t\t   
+      / asuint(uniform_a);\n\t\t\t\t    uint tmp_bb = tmp_ba * asuint(uniform_a);\n\t\t\t\t   
       uint tmp_bc = attributes.particleId - tmp_bb;\n\t\t\t\t    float tmp_bd = (float)tmp_bc;\n\t\t\t\t   
       bool tmp_bf = tmp_bd == (float)0;\n\t\t\t\t    SetAttribute_ED2BDC15( /*inout
       */attributes.alive, tmp_bf);\n\t\t\t\t}\n\t\t\t\t{\n\t\t\t\t    ConnectTarget_0(
@@ -2314,7 +2314,7 @@ VisualEffectResource:
       attributes, stripData);\n\t\t\t\t\t\t#endif\n\t\t\t\t\t\t\t\n\t\t\t\tSetAttribute_CEEAF35C(
       /*inout */attributes.alpha, Alpha_a);\n\t\t\t\tSetAttribute_3278B22F( /*inout
       */attributes.size, Size_b);\n\t\t\t\t{\n\t\t\t\t    uint tmp_ba = attributes.particleId
-      / asuint(uniform_d);\n\t\t\t\t    uint tmp_bb = tmp_ba * asuint(uniform_d);\n\t\t\t\t   
+      / asuint(uniform_a);\n\t\t\t\t    uint tmp_bb = tmp_ba * asuint(uniform_a);\n\t\t\t\t   
       uint tmp_bc = attributes.particleId - tmp_bb;\n\t\t\t\t    float tmp_bd = (float)tmp_bc;\n\t\t\t\t   
       bool tmp_bf = tmp_bd == (float)0;\n\t\t\t\t    SetAttribute_ED2BDC15( /*inout
       */attributes.alive, tmp_bf);\n\t\t\t\t}\n\t\t\t\t{\n\t\t\t\t    ConnectTarget_0(
@@ -3255,7 +3255,7 @@ VisualEffectResource:
         index: 80
       - nameId: Position_d
         index: 73
-      - nameId: uniform_f
+      - nameId: uniform_a
         index: 52
       - nameId: Camera_depthBuffer_c
         index: 72
@@ -3287,15 +3287,15 @@ VisualEffectResource:
         index: 0
       temporaryBuffers: []
       values:
-      - nameId: uniform_b
+      - nameId: uniform_a
         index: 46
-      - nameId: uniform_c
+      - nameId: uniform_b
         index: 20
-      - nameId: uniform_d
+      - nameId: uniform_c
         index: 5
-      - nameId: uniform_e
+      - nameId: uniform_d
         index: 25
-      - nameId: uniform_f
+      - nameId: uniform_e
         index: 51
       - nameId: mainTexture
         index: 65
@@ -3314,7 +3314,7 @@ VisualEffectResource:
         index: 74
       - nameId: Size_b
         index: 75
-      - nameId: uniform_d
+      - nameId: uniform_a
         index: 35
       - nameId: TargetPosition_d
         index: 77
